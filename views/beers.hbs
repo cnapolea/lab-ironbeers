@@ -1,0 +1,14 @@
+<div class="beers-container">
+    {{#each Beers}}
+    <a href="/beer-{{id}}">
+        <div class="beer">
+            <img class="beer-img" src="{{image_url}}" alt="beer image">
+            <h3 class="beer-name">
+                {{name}}
+            </h3>
+            <small>{{tagline}}</small>
+            <p>{{#checklength description 100}} {{/checklength}}</p>
+        </div>
+    </a>
+    {{/each}}
+</div>

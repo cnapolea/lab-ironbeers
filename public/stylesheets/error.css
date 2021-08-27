@@ -1,0 +1,18 @@
+.error-container{
+    width: 100vw;
+    height: 100vh;
+}
+
+.error-container img {
+    height: 100%;
+    max-width: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+.error-container h1 {
+    font-size: 3rem;
+    margin-left: 2%;
+    position: relative;
+    top: 21%;
+}

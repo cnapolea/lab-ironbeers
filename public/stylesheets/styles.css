@@ -10,7 +10,6 @@ font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    overflow-y: hidden;
     font-family: "Montserrat";
 }
 
@@ -19,10 +18,14 @@ html {
     width: 100%;
 }
 
+body{
+    height: 100%;
+}
+
 .navbar {
     display: flex;
     align-items: center;
-    background-color: #2081c3;
+    background-color: #5E454B;
     height: 3rem;
     gap: 1rem;
 
@@ -34,6 +37,7 @@ html {
 
 .nav-link {
     color: #f7f9f9;
+    font-size: 1.2rem;
     text-decoration: none;
 }
 
@@ -47,8 +51,8 @@ html {
     gap: 3rem;
 }
 
-.beer-img {
-    max-width: 65%;
+.main-page-container img {
+    width: 35%;
 }
 
 .intro-btns {
@@ -63,8 +67,8 @@ html {
 .intro-btns a {
     color: #f7f9f9;
     text-decoration: none;
-    background-color: #2081c3;
-    border-radius: 1%;
+    background-color: #5E454B;
+    border-radius: 4px;
     height: 2rem;
     border: transparent;
     box-shadow: #000000a6 0px 1px 4px 0px;
@@ -98,3 +102,41 @@ html {
     text-align: center;
 }
 
+.beers-container {
+    align-items: center;
+    background-color: #f7f6f2;
+    display: flex;
+    flex-flow: wrap;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100vw;
+}
+
+.beers-container a {
+    color: inherit;
+    margin-top: 25px;
+    text-decoration: none;
+    width: 20rem;
+}
+
+.beer {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    justify-content: center;
+    text-align: center;
+}
+
+.beer-img {
+    width: 5rem;
+}
+
+.beer small {
+    color: #bfbfbf;
+}
+
+.beer p {
+    font-size: .9rem;
+    width: 80%;
+}
