@@ -1,0 +1,23 @@
+<div class="search-by-container">
+
+    <div class="search-header">
+        <h1>Hey! What beer goes well with cashews?</h1>
+        <h2>Let's search!</h2>
+    </div>
+    <form action="/beers" method="post">
+        <div class="selection">
+            <label for="searchBy">Search Beer By</label>
+            <select name="searchBy" id="search-by">
+                <option value="beer_name">Beer Name</option>
+                <option value="abv_gt">Beer Strength Greater Than - E.g. 4 or 6</option>
+                <option value="yeast">Beer Yeast</option>
+                <option value="malt">Beer Malt</option>
+                <option value="food">Beer - Pairing Food</option>
+            </select>
+        </div>
+        <div class="text-input">
+            <input type="text" name="searchInput" id="search-input" placeholder="E.g. Heineken-Beer Name">
+            <button>Search Beer</button>
+        </div>
+    </form>
+</div>

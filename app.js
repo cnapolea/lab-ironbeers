@@ -14,6 +14,7 @@ const punkAPI = new PunkAPIWrapper();
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((err, req, res, next) => {
   res.redirect('/error');
@@ -40,10 +41,13 @@ app
   })
 
   .get('/beers', (req, res, next) => {
+    if(req.body !== undefined) {
+      
+    }
     punkAPI.getBeers()
-      .then(data => {
+      .then(beers => {
         res.render('beers', {
-          Beers: data,
+          beers
         });
       })
       .catch(err => {
@@ -54,7 +58,7 @@ app
   .get('/random-beer', (req, res, next) => {
     punkAPI.getRandom()
       .then(beer => {
-        if (beer.statusCode === 404) res.redirect('/error');
+        if (beer.statusCode === 404 || beer.statusCode === 404) res.redirect('/error');
         res.render('random_beers', {
           beer
         });
@@ -67,7 +71,7 @@ app
 
     punkAPI.getBeer(id)
       .then(beer => {
-        if (beer.statusCode === 404) res.redirect('/error');
+        if (beer.statusCode === 404 || beer.statusCode === 404) res.redirect('/error');
         res.render('selected_beer', {
           beer
         });
@@ -77,8 +81,22 @@ app
       });
   })
 
-  .get('/seach-by', (req, res) =>{
+  .get('/search-by', (req, res) =>{
+    res.render('search-by');
+  })
 
+  .post('/beers', (req, res, next) => {
+    console.log(req.body);
+    const {searchBy, searchInput} = req.body;
+    punkAPI.getBeers({[searchBy]: searchBy==='abv_gt'?Number(searchInput):searchInput.replace(' ', '_')})
+      .then(beers => {
+        console.log(beers);
+        if (beers.statusCode === 404 || beers.statusCode === 404 || beers === []) res.redirect('/error');
+        res.render('beers', {beers});
+      })
+      .catch(err => {
+        next(err);
+      });
   })
 
   .get('/error', (req, res) => {
