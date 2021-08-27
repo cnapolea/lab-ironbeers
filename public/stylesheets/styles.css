@@ -19,7 +19,7 @@ html {
 }
 
 body{
-    background-color: #f7f6f2;
+    background-color: #fff;
 }
 
 .navbar {
@@ -54,6 +54,7 @@ body{
     justify-content: center;
     align-items: center;
     gap: 3rem;
+    margin-top: 3%;
 }
 
 .main-page-container img {
@@ -61,11 +62,11 @@ body{
 }
 
 .intro-btns {
-    display: flex;
-    flex-direction: column;
     align-items: center;
+    display: flex;
     height: 8em;
     gap: 1rem;
+    justify-content: center;
     width: 100%;
 }
 
@@ -74,22 +75,16 @@ body{
     text-decoration: none;
     background-color: #5E454B;
     border-radius: 4px;
-    height: 2rem;
+    height: 40%;
     border: transparent;
     box-shadow: #000000a6 0px 1px 4px 0px;
     padding: .5rem 1rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
     text-align: center;
-}
-
-.intro-btns a:first-child {
-    width: 50%;
-    max-width: 13rem;
-}
-
-.intro-btns a:last-child {
-    width: 65%;
-    max-width: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
 }
 
 .footer {

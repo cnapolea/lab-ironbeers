@@ -1,9 +1,12 @@
 // jshint esversion:10
 
+require('dotenv').config();
+
 const express = require('express');
 const hbs = require('hbs');
 const path = require('path');
 const PunkAPIWrapper = require('punkapi-javascript-wrapper');
+const mongoose = require('mongoose');
 
 const app = express();
 const punkAPI = new PunkAPIWrapper();
@@ -49,7 +52,7 @@ app
   })
 
   .get('/random-beer', (req, res, next) => {
-    const randomBeer = punkAPI.getRandom()
+    punkAPI.getRandom()
       .then(beer => {
         if (beer.statusCode === 404) res.redirect('/error');
         res.render('random_beers', {
@@ -74,6 +77,10 @@ app
       });
   })
 
+  .get('/seach-by', (req, res) =>{
+
+  })
+
   .get('/error', (req, res) => {
     res.render('error', {
       status: 404,
@@ -84,4 +91,8 @@ app.get('*', (req, res) => {
   res.redirect('/error');
 });
 
-app.listen(3000, () => console.log('🏃‍ on port 3000'));
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => {
+    app.listen(process.env.PORT, () => console.log(`🏃‍ on port ${process.env.PORT}`));
+  })
+  .catch(error => {throw new Error(error.message);});
