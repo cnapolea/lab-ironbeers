@@ -1,0 +1,35 @@
+.beer-container {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.beer-container .beer-img{
+    width: 12%;
+}
+
+.beer-container .beer-information {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 60%;
+}
+
+.beer-information small {
+    color: #c5c5c5;
+}
+
+.beer-information ul {
+    list-style-type: none;
+}
+
+.beer-information ul li {
+    margin: 0 0 5px 0;
+}
+
+.beer-information span {
+    font-weight: 600;
+    margin-right: 5px;
+}

@@ -18,7 +18,7 @@ app.use((err, req, res, next) => {
 
 
 // Register the location for handlebars partials here:
-hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
+hbs.registerPartials(path.join(__dirname, 'views/partials'));
 // ...
 
 hbs.registerHelper('checklength', (description, length) => {
@@ -29,15 +29,16 @@ hbs.registerHelper('checklength', (description, length) => {
 
 // Add the route handlers here:
 
-app.get('/', (req, res) => {
+app
+  .get('/', (req, res) => {
     res.render('index', {
       beerImg: '/images/beer.png'
     });
   })
-  .get('/beers', (req, res) => {
+
+  .get('/beers', (req, res, next) => {
     punkAPI.getBeers()
       .then(data => {
-        console.log(req);
         res.render('beers', {
           Beers: data,
         });
@@ -46,15 +47,33 @@ app.get('/', (req, res) => {
         next(err);
       });
   })
-  .get('/random-beer', (req, res) => {
+
+  .get('/random-beer', (req, res, next) => {
     const randomBeer = punkAPI.getRandom()
       .then(beer => {
+        if (beer.statusCode === 404) res.redirect('/error');
         res.render('random_beers', {
           beer
         });
       })
       .catch(err => next(err));
   })
+  
+  .get('/beer/:id', (req, res, next) => {
+    const id = req.params.id;
+
+    punkAPI.getBeer(id)
+      .then(beer => {
+        if (beer.statusCode === 404) res.redirect('/error');
+        res.render('selected_beer', {
+          beer
+        });
+      })
+      .catch(err => {
+        next(err);
+      });
+  })
+
   .get('/error', (req, res) => {
     res.render('error', {
       status: 404,

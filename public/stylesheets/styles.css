@@ -19,15 +19,15 @@ html {
 }
 
 body{
-    height: 100%;
+    background-color: #f7f6f2;
 }
 
 .navbar {
-    display: flex;
     align-items: center;
-    background-color: #5E454B;
-    height: 3rem;
-    gap: 1rem;
+    display: flex;
+    gap: 4rem;
+    justify-content: center;
+    margin-top: 50px;
 
 }
 
@@ -36,9 +36,14 @@ body{
 }
 
 .nav-link {
-    color: #f7f9f9;
-    font-size: 1.2rem;
+    color: #000;
+    font-size: 1.5rem;
     text-decoration: none;
+    transition: font-size ease-in-out 1s;
+}
+
+.nav-link:hover {
+    font-size: 2rem;
 }
 
 .main-page-container {
@@ -104,11 +109,11 @@ body{
 
 .beers-container {
     align-items: center;
-    background-color: #f7f6f2;
     display: flex;
     flex-flow: wrap;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 50px;
     width: 100vw;
 }
 
