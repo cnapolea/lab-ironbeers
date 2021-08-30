@@ -11,6 +11,8 @@ const sassMiddleware = require('node-sass-middleware');
 const morgan = require('morgan');
 const serveFavicon = require('serve-favicon');
 
+const WishList = require('./models/beers');
+
 const app = express();
 const punkAPI = new PunkAPIWrapper();
 
@@ -18,7 +20,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 
-app.use(serveFavicon(path.join(__dirname,'public','favicon.ico')));
+app.use(serveFavicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.urlencoded({
   extended: true
 }));
@@ -31,10 +33,6 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
-
-app.use((err, req, res, next) => {
-  res.redirect('/error');
-});
 
 
 // Register the location for handlebars partials here:
@@ -74,6 +72,7 @@ app
   .get('/random-beer', (req, res, next) => {
     punkAPI.getRandom()
       .then(beer => {
+        console.log(beer);
         if (beer.statusCode === 404 || beer.statusCode === 404) res.redirect('/error');
         res.render('random_beers', {
           beer
@@ -142,6 +141,42 @@ app
       });
   })
 
+  .post('/add-to-wish-list', (req, res, next) => {
+    const {apiID, name, tagline, first_brewed, description, image_url, abv, ibu, ph, yeast, food_pairing, brewers_tips} = req.body;
+    
+    WishList.create({
+      apiID,
+      name,
+      tagline,
+      first_brewed,
+      description,
+      image_url,
+      abv,
+      ibu,
+      ph,
+      yeast,
+      food_pairing: food_pairing.split(','),
+      brewers_tips
+    })
+      .then((data) => {
+        res.redirect('/wish-list');
+
+      })
+      .catch(err => next(err));
+
+  })
+  .get('/wish-list', (req, res, next) => {
+      WishList.find({})
+        .then(beers => {
+          // if (beers.length < 1) throw new Error();
+          res.render('beers', {
+            beers
+          });
+        })
+        .catch(err => {
+          next(err);
+        });
+  })
   .get('/error', (req, res) => {
     res.render('error', {
       status: 404,
@@ -149,6 +184,10 @@ app
   });
 
 app.get('*', (req, res) => {
+  res.redirect('/error');
+});
+
+app.use((err, req, res, next) => {
   res.redirect('/error');
 });
 

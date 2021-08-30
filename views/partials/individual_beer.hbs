@@ -1,6 +1,18 @@
 <div class="img-section">    
     <img class="beer-img" src="{{image_url}}" alt="beer image">
-    <form action="" method="post">
+    <form action="/add-to-wish-list" method="post">
+        <input type="hidden" name="apiID" value="{{id}}">
+        <input type="hidden" name="name" value="{{name}}">
+        <input type="hidden" name="tagline" value="{{tagline}}">
+        <input type="hidden" name="first_brewed" value="{{first_brewed}}">
+        <input type="hidden" name="description" value="{{description}}">
+        <input type="hidden" name="image_url" value="{{image_url}}">
+        <input type="hidden" name="abv" value="{{abv}}">
+        <input type="hidden" name="ibu" value="{{ibu}}">
+        <input type="hidden" name="ph" value="{{ph}}">
+        <input type="hidden" name="yeast" value="{{ingredients.yeast}}">
+        <input type="hidden" name="food_pairing" value="{{food_pairing}}">
+        <input type="hidden" name="brewers_tips" value="{{brewers_tips}}">
         <button>Add to wishlist</button>
     </form>
 </div>

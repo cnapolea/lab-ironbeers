@@ -1,11 +1,11 @@
 // jshint esversion:10
 
-const { Mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
-const wishListSchema = new Mongoose.Schema({
+const wishListSchema = new mongoose.Schema({
     apiId: {
         type: Number,
-        require: true
+        require: true,
     },
 
     name: {
@@ -22,7 +22,7 @@ const wishListSchema = new Mongoose.Schema({
         type: String,
     },
 
-    description:{
+    description: {
         type: String,
         require: true
     },
@@ -34,15 +34,15 @@ const wishListSchema = new Mongoose.Schema({
     abv: Number,
     ibu: Number,
     ph: Number,
-    ingredients: {
-      malt: [Array],
-      hops: [Array],
-      yeast: String
-    },
+    yeast: String,
     food_pairing: [String],
     brewers_tips: String,
+    tasted: {
+        type: Boolean,
+        default: false,
+    }
 });
 
-const WishList = Mongoose.model('Wishlist', wishListSchema);
+const WishList = mongoose.model('Wishlist', wishListSchema);
 
 module.exports = WishList;

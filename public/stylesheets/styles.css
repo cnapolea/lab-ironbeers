@@ -19,7 +19,7 @@ html {
 
 body {
   background-color: #fff;
-  height: 100vh;
+  height: 100%;
 }
 
 .navbar {
@@ -106,7 +106,6 @@ body {
   display: flex;
   flex-flow: wrap;
   flex-wrap: wrap;
-  height: 100%;
   justify-content: center;
   margin: 50px 0 20px 0;
   width: 100vw;
