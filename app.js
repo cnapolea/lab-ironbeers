@@ -7,6 +7,9 @@ const hbs = require('hbs');
 const path = require('path');
 const PunkAPIWrapper = require('punkapi-javascript-wrapper');
 const mongoose = require('mongoose');
+const sassMiddleware = require('node-sass-middleware');
+const morgan = require('morgan');
+const serveFavicon = require('serve-favicon');
 
 const app = express();
 const punkAPI = new PunkAPIWrapper();
@@ -14,8 +17,21 @@ const punkAPI = new PunkAPIWrapper();
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.urlencoded({extended:true}));
+
+app.use(serveFavicon(path.join(__dirname,'public','favicon.ico')));
+app.use(express.urlencoded({
+  extended: true
+}));
+app.use(sassMiddleware({
+  dest: path.join(__dirname, 'public/stylesheets'),
+  src: path.join(__dirname, 'styles'),
+  force: true,
+  outputStyle: 'expanded',
+  prefix: '/stylesheets'
+}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(morgan('dev'));
+
 app.use((err, req, res, next) => {
   res.redirect('/error');
 });
@@ -41,8 +57,8 @@ app
   })
 
   .get('/beers', (req, res, next) => {
-    if(req.body !== undefined) {
-      
+    if (req.body !== undefined) {
+
     }
     punkAPI.getBeers()
       .then(beers => {
@@ -65,7 +81,7 @@ app
       })
       .catch(err => next(err));
   })
-  
+
   .get('/beer/:id', (req, res, next) => {
     const id = req.params.id;
 
@@ -81,18 +97,45 @@ app
       });
   })
 
-  .get('/search-by', (req, res) =>{
+  .get('/search-by', (req, res) => {
     res.render('search-by');
   })
 
   .post('/beers', (req, res, next) => {
     console.log(req.body);
-    const {searchBy, searchInput} = req.body;
-    punkAPI.getBeers({[searchBy]: searchBy==='abv_gt'?Number(searchInput):searchInput.replace(' ', '_')})
+    const {
+      searchBy,
+      searchInput
+    } = req.body;
+    punkAPI.getBeers({
+        [searchBy]: searchBy === 'abv_gt' ? Number(searchInput) : searchInput.replace(' ', '_')
+      })
       .then(beers => {
         console.log(beers);
         if (beers.statusCode === 404 || beers.statusCode === 404 || beers === []) res.redirect('/error');
-        res.render('beers', {beers});
+        res.render('beers', {
+          beers
+        });
+      })
+      .catch(err => {
+        next(err);
+      });
+  })
+  .post('/beers', (req, res, next) => {
+    console.log(req.body);
+    const {
+      searchBy,
+      searchInput
+    } = req.body;
+    punkAPI.getBeers({
+        [searchBy]: searchBy === 'abv_lt' ? Number(searchInput) : searchInput.replace(' ', '_')
+      })
+      .then(beers => {
+        console.log(beers);
+        if (beers.statusCode === 404 || beers.statusCode === 404 || beers === []) res.redirect('/error');
+        res.render('beers', {
+          beers
+        });
       })
       .catch(err => {
         next(err);
@@ -113,4 +156,6 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     app.listen(process.env.PORT, () => console.log(`🏃‍ on port ${process.env.PORT}`));
   })
-  .catch(error => {throw new Error(error.message);});
+  .catch(error => {
+    throw new Error(error.message);
+  });
