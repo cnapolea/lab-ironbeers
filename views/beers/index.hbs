@@ -1,14 +1,21 @@
-<div class="beers-container">
-    {{#each beers}}
-    <a href="/beer/{{id}}">
-        <div class="beer">
-            <img class="beer-img" src="{{image_url}}" alt="beer image">
-            <h3 class="beer-name">
-                {{name}}
-            </h3>
-            <small>{{tagline}}</small>
-            <p>{{#checklength description 100}} {{/checklength}}</p>
-        </div>
-    </a>
-    {{/each}}
+<div>
+    <div class="beers-container">
+        {{#each beers}}
+        <a href="/beers/beer/{{id}}">
+            <div class="beer">
+                <div class="wish-list-btn">
+                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-beer"></i>
+                </div>
+                <img class="beer-img" src="{{image_url}}" alt="beer image">
+                <h3 class="beer-name">
+                    {{name}}
+                </h3>
+                <small>{{tagline}}</small>
+                <p>{{#checklength description 100}} {{/checklength}} </p>
+                
+            </div>
+        </a>
+        {{/each}}
+    </div>
 </div>

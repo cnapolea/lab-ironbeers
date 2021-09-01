@@ -3,19 +3,20 @@
 const mongoose = require("mongoose");
 
 const wishListSchema = new mongoose.Schema({
-    apiId: {
+    beer_id: {
         type: Number,
-        require: true,
+        required:true,
+        unique:true
     },
 
     name: {
         type: String,
-        require: true
+        required: true
     },
 
     tagline: {
         type: String,
-        require: true
+        required: true
     },
 
     first_brewed: {
@@ -24,12 +25,12 @@ const wishListSchema = new mongoose.Schema({
 
     description: {
         type: String,
-        require: true
+        required: true
     },
 
     image_url: {
         type: String,
-        require: true
+        required: true
     },
     abv: Number,
     ibu: Number,

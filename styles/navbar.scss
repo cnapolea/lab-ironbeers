@@ -1,0 +1,23 @@
+.navbar {
+    align-items: center;
+    display: flex;
+    gap: 4rem;
+    justify-content: center;
+    margin-top: 35px;
+
+}
+
+.nav-link:first-child {
+    margin-left: 1rem;
+}
+
+.nav-link {
+    color: #000;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: font-size ease-in-out 1s;
+}
+
+.nav-link:hover {
+    font-size: 2rem;
+}

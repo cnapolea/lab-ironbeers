@@ -9,6 +9,7 @@ const WishList = require('../models/beers');
 beersRouter.get('', (req, res, next) => {
     punkAPI.getBeers()
         .then(beers => {
+            console.log(beers);
             res.render('beers/index', {
                 beers
             });
@@ -30,9 +31,9 @@ beersRouter.get('/random-beer', (req, res, next) => {
 
 beersRouter.get('/beer/:id', (req, res, next) => {
     const id = req.params.id;
-
     punkAPI.getBeer(id)
         .then(beer => {
+            console.log(beer);
             res.render('beers/selected_beer', {
                 beer
             });
@@ -66,9 +67,11 @@ beersRouter.post('', (req, res, next) => {
 });
 
 beersRouter.post('/add-to-wish-list', (req, res, next) => {
-    WishList.create({... req.body})
+    WishList.create({
+            ...req.body
+        })
         .then(() => {
-            res.redirect('beers/wish-list');
+            res.redirect('/beers/wish-list');
 
         })
         .catch(err => next(err));
@@ -76,11 +79,23 @@ beersRouter.post('/add-to-wish-list', (req, res, next) => {
 });
 
 beersRouter.get('/wish-list', (req, res, next) => {
+    const ids = [];
+
     WishList.find({})
         .then(beers => {
-            res.render('beers/index', {
-                beers
-            });
+            for (let beer of beers) {
+                ids.push(beer.beer_id);
+            }
+
+            punkAPI.getBeers({ids:ids.join('|')})
+            .then(beers => {
+                    
+                    res.render('beers/index', {
+                        beers
+                    });
+                })
+                .catch(err => next(err));
+
         })
         .catch(err => {
             next(err);
