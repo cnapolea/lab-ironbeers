@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js -e js,hbs,html,scss"
+    "dev": "nodemon server.js -e js,hbs,html,scss"
   },
   "license": "ISC",
   "dependencies": {
